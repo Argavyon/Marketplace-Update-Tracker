@@ -1,0 +1,55 @@
+on:
+  schedule:
+  - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  check_forums:
+    runs-on: ubuntu-latest
+    name: Marketplace Update Tracker
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        
+      - name: Download previous last post URL .txt file
+        continue-on-error: true
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: UpdateTracker.yml
+          name: post_url
+          
+      - name: Read previous last post URL
+        id: lastPost
+        shell: bash
+        run: |
+          if [ -f post_url.txt ];then
+            value=`cat post_url.txt`
+          else
+            value=''
+          fi
+          echo "post_url=$value" >> $GITHUB_OUTPUT
+          
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - run: npm install
+        
+      - name: Get Updates from DDO forums
+        id: getUpdates
+        uses: ./getUpdates
+        with:
+          post_url: ${{ steps.lastPost.outputs.post_url }}
+          webhook_string_data: ${{ secrets.WebhookStringData }}
+        
+      - name: Store last post URL to .txt file
+        if: "${{ steps.getUpdates.outputs.new_post }}"
+        run: echo "${{ steps.getUpdates.outputs.post_url }}" > post_url.txt
+        
+      - name: Upload post URL .txt file to the repository
+        if: "${{ steps.getUpdates.outputs.new_post }}"
+        uses: actions/upload-artifact@v3
+        with:
+          name: post_url
+          path: post_url.txt

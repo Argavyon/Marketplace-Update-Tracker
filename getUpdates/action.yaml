@@ -1,0 +1,19 @@
+name: 'Marketplace Tracker'
+description: 'Check the DDO Forums for Marketplace updates.'
+inputs:
+  post_url:
+    description: 'Previous last post URL'
+    required: true
+    default: ''
+  webhook_string_data:
+    description: 'List of Discord server ID and Webhook tokens, separated by a space, one per line'
+    required: true
+    default: ''
+outputs:
+  post_url:
+    description: 'Last post URL'
+  new_post:
+    description: 'Indicates whether a new post was found'
+runs:
+  using: 'node16'
+  main: 'check_forums.js'
