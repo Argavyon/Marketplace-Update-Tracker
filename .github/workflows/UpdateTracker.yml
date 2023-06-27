@@ -44,11 +44,11 @@ jobs:
           webhook_string_data: ${{ secrets.WebhookStringData }}
         
       - name: Store last post URL to .txt file
-        if: "${{ steps.getUpdates.outputs.new_post }}"
+        if: steps.getUpdates.outputs.new_post
         run: echo "${{ steps.getUpdates.outputs.post_url }}" > post_url.txt
         
       - name: Upload post URL .txt file to the repository
-        if: "${{ steps.getUpdates.outputs.new_post }}"
+        if: steps.getUpdates.outputs.new_post
         uses: actions/upload-artifact@v3
         with:
           name: post_url
