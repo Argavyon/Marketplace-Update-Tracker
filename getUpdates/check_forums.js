@@ -24,9 +24,9 @@ async function fetchNewPostAndUpdate() {
 
     if (threadHRef === lastURL) {
         core.warning('No new posts found');
-        core.setOutput('new_post', false);
+        core.setOutput('new_post', 0);
     } else {
-        core.setOutput('new_post', true);
+        core.setOutput('new_post', 1);
         core.setOutput('post_url', threadHRef);
 
         const response2 = await fetch(proxy + 'https://forums.ddo.com' + threadHRef);
