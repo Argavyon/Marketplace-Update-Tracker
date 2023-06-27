@@ -45,7 +45,9 @@ jobs:
         
       - name: Store last post URL to .txt file
         if: ${{ steps.getUpdates.outputs.new_post != 0 }}
-        run: echo "${{ steps.getUpdates.outputs.post_url }}" > post_url.txt
+        run: |
+          echo "${{ steps.getUpdates.outputs.new_post }}"
+          echo "${{ steps.getUpdates.outputs.post_url }}" > post_url.txt
         
       - name: Upload post URL .txt file to the repository
         if: ${{ steps.getUpdates.outputs.new_post != 0 }}
