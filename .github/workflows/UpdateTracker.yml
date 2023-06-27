@@ -42,11 +42,6 @@ jobs:
         with:
           post_url: ${{ steps.lastPost.outputs.post_url }}
           webhook_string_data: ${{ secrets.WebhookStringData }}
-          
-      - name: Debug
-        run: |
-          echo "${{ steps.getUpdates.outputs.new_post }}"
-          echo "${{ !! steps.getUpdates.outputs.new_post }}"
         
       - name: Store last post URL to .txt file
         if: "${{ steps.getUpdates.outputs.new_post }}"
