@@ -48,7 +48,6 @@ jobs:
         run: echo "${{ steps.getUpdates.outputs.post_url }}" > post_url.txt
         
       - name: Upload post URL .txt file to the repository
-        if: ${{ steps.getUpdates.outputs.new_post == 'true' }}
         uses: actions/upload-artifact@v3
         with:
           name: post_url
