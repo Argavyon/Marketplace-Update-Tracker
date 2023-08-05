@@ -9,6 +9,9 @@ inputs:
     description: 'List of Discord server ID and Webhook tokens, separated by a space, one per line'
     required: true
     default: ''
+  Proxy:
+    required: true
+    default: ''
 outputs:
   post_url:
     description: 'Last post URL'
