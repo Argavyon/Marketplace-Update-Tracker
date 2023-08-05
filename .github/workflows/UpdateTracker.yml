@@ -42,6 +42,7 @@ jobs:
         with:
           post_url: ${{ steps.lastPost.outputs.post_url }}
           webhook_string_data: ${{ secrets.WebhookStringData }}
+          proxy: ${{ secrets.Proxy }}
         
       - name: Store last post URL to .txt file
         if: ${{ steps.getUpdates.outputs.new_post == 'true' }}
