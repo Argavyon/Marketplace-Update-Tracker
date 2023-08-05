@@ -6,7 +6,7 @@ const { WebhookClient } = require('discord.js');
 async function fetchNewPostAndUpdate() {
     const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
-    const proxy = 'https://cors-anywhere.argavyon.workers.dev/?';
+    const proxy = core.getInput('proxy');
     const forumURL = 'https://forums.ddo.com/index.php?forums/ddo-store-sales-and-promotions.8';
 
     const response1 = await fetch(proxy + forumURL);
